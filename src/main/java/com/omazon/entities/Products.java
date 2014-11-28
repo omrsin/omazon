@@ -9,6 +9,7 @@ import java.io.Serializable;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
@@ -34,8 +35,8 @@ public class Products implements Serializable {
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
-    @NotNull
     @Column(name = "ID")
+    @GeneratedValue
     private Integer id;
     @Size(max = 255)
     @Column(name = "NAME")
@@ -44,18 +45,6 @@ public class Products implements Serializable {
     @Size(max = 32700)
     @Column(name = "DESCRIPTION")
     private String description;
-    @Size(max = 32700)
-    @Column(name = "DESCRIPTION2")
-    private String description2;
-
-    public String getDescription2() {
-        return description2;
-    }
-
-    public void setDescription2(String description2) {
-        this.description2 = description2;
-    }
-
     
     
     public Products() {

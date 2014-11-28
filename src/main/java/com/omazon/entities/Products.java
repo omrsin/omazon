@@ -30,6 +30,7 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Products.findById", query = "SELECT p FROM Products p WHERE p.id = :id"),
     @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name")})
 public class Products implements Serializable {
+
     private static final long serialVersionUID = 1L;
     @Id
     @Basic(optional = false)
@@ -43,7 +44,20 @@ public class Products implements Serializable {
     @Size(max = 32700)
     @Column(name = "DESCRIPTION")
     private String description;
+    @Size(max = 32700)
+    @Column(name = "DESCRIPTION2")
+    private String description2;
 
+    public String getDescription2() {
+        return description2;
+    }
+
+    public void setDescription2(String description2) {
+        this.description2 = description2;
+    }
+
+    
+    
     public Products() {
     }
 
@@ -99,5 +113,5 @@ public class Products implements Serializable {
     public String toString() {
         return "com.omazon.entities.Products[ id=" + id + " ]";
     }
-    
+
 }

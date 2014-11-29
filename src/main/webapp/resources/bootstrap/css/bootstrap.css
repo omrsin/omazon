@@ -269,9 +269,9 @@ th {
   
   src: url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.eot']}");
   src: url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.eot']}&#iefix") format('embedded-opentype'),
-      url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.woff']}") format('woff'),
-      url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.ttf']}") format('truetype'),
-      url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.svg']}#glyphicons_halflingsregular") format('svg');  
+       url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.woff']}") format('woff'),
+       url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.ttf']}") format('truetype'),
+       url("#{resource['bootstrap/fonts/glyphicons-halflings-regular.svg']}#glyphicons_halflingsregular") format('svg');  
 }
 .glyphicon {
   position: relative;
@@ -6332,4 +6332,4 @@ button.close {
     display: none !important;
   }
 }
-/*# sourceMappingURL=bootstrap.css.map */
+/*# sourceMappingURL=url("#{resource['bootstrap.css.map']}") */

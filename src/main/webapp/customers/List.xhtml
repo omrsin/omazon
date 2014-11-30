@@ -10,10 +10,7 @@
             <h:outputText value="#{bundle.ListCustomersTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:form styleClass="jsfcrud_list_form">
-                <h:panelGroup id="messagePanel" layout="block">
-                    <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-                </h:panelGroup>
+            <h:form styleClass="jsfcrud_list_form">                
                 <h:outputText escape="false" value="#{bundle.ListCustomersEmpty}" rendered="#{customersController.items.rowCount == 0}"/>
                 <h:panelGroup rendered="#{customersController.items.rowCount > 0}">
                     <h:outputText value="#{customersController.pagination.pageFirstItem + 1}..#{customersController.pagination.pageLastItem + 1}/#{customersController.pagination.itemsCount}"/>&nbsp;

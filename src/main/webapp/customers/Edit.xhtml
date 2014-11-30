@@ -10,13 +10,8 @@
             <h:outputText value="#{bundle.EditCustomersTitle}"></h:outputText>
         </ui:define>
         <ui:define name="body">
-            <h:panelGroup id="messagePanel" layout="block">
-                <h:messages errorStyle="color: red" infoStyle="color: green" layout="table"/>
-            </h:panelGroup>
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputLabel value="#{bundle.EditCustomersLabel_id}" for="id" />
-                    <h:inputText id="id" value="#{customersController.selected.id}" title="#{bundle.EditCustomersTitle_id}" required="true" requiredMessage="#{bundle.EditCustomersRequiredMessage_id}"/>
+                <h:panelGrid columns="2">                    
                     <h:outputLabel value="#{bundle.EditCustomersLabel_name}" for="name" />
                     <h:inputText id="name" value="#{customersController.selected.name}" title="#{bundle.EditCustomersTitle_name}" />
                     <h:outputLabel value="#{bundle.EditCustomersLabel_email}" for="email" />

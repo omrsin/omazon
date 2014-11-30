@@ -9,4 +9,11 @@
             <var>bundle</var>
         </resource-bundle>
     </application>
+    <render-kit>
+        <renderer>
+            <component-family>javax.faces.Messages</component-family>
+            <renderer-type>javax.faces.Messages</renderer-type>
+            <renderer-class>com.omazon.renderers.BootstrapMessagesRenderer</renderer-class>
+        </renderer> 
+    </render-kit>
 </faces-config>

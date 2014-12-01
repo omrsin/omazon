@@ -11,29 +11,19 @@
         </ui:define>
         <ui:define name="body">            
             <h:form>
-                <h:panelGrid columns="2">
-                    <h:outputText value="#{bundle.ViewProductsLabel_id}"/>
-                    <h:outputText value="#{productsController.selected.id}" title="#{bundle.ViewProductsTitle_id}"/>
-                    <h:outputText value="#{bundle.ViewProductsLabel_name}"/>
-                    <h:outputText value="#{productsController.selected.name}" title="#{bundle.ViewProductsTitle_name}"/>
-                    <h:outputText value="#{bundle.ViewProductsLabel_description}"/>
-                    <h:outputText value="#{productsController.selected.description}" title="#{bundle.ViewProductsTitle_description}"/>
-                </h:panelGrid>
-                <br />
-                <h:commandLink action="#{productsController.destroyAndView}" value="#{bundle.ViewProductsDestroyLink}"/>
-                <br />
-                <br />
-                <h:link outcome="Edit" value="#{bundle.ViewProductsEditLink}"/>
-                <br />
-                <h:commandLink action="#{productsController.prepareCreate}" value="#{bundle.ViewProductsCreateLink}" />
-                <br />
-                <h:commandLink action="#{productsController.prepareList}" value="#{bundle.ViewProductsShowAllLink}"/>
-                <br />
-                <br />
-                <h:link outcome="/index" value="#{bundle.ViewProductsIndexLink}"/>
-
+                <div class="col-sm-12 col-md-3">
+                    <h:panelGrid columns="2" styleClass="table" >
+                        <h:outputText value="#{bundle.ViewProductsLabel_id}"/>
+                        <h:outputText value="#{productsController.selected.id}" title="#{bundle.ViewProductsTitle_id}"/>
+                        <h:outputText value="#{bundle.ViewProductsLabel_name}"/>
+                        <h:outputText value="#{productsController.selected.name}" title="#{bundle.ViewProductsTitle_name}"/>
+                        <h:outputText value="#{bundle.ViewProductsLabel_description}"/>
+                        <h:outputText value="#{productsController.selected.description}" title="#{bundle.ViewProductsTitle_description}"/>
+                    </h:panelGrid>
+                    <h:button outcome="Edit" value="#{bundle.ViewProductsEditLink}" styleClass="btn btn-primary"/>
+                    <h:commandLink action="#{productsController.destroyAndView}" value="#{bundle.ViewProductsDestroyLink}" styleClass="btn btn-danger" />
+                </div>
             </h:form>
         </ui:define>
     </ui:composition>
-
 </html>

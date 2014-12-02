@@ -6,12 +6,15 @@
 package com.omazon.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -48,6 +51,13 @@ public class Orders implements Serializable {
     @ManyToOne(fetch=FetchType.EAGER)    
     @JoinColumn(name="CUSTOMER_ID")
     private Customers customer;
+    
+    @ManyToMany
+    @JoinTable(
+            name="ORDERS_PRODUCTS",
+            joinColumns={@JoinColumn(name="ORDER_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="PRODUCT_ID", referencedColumnName="ID")})
+    private List<Products> products;
 
     public Orders() {
     }

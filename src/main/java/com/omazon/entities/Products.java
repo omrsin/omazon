@@ -31,22 +31,23 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Products.findById", query = "SELECT p FROM Products p WHERE p.id = :id"),
     @NamedQuery(name = "Products.findByName", query = "SELECT p FROM Products p WHERE p.name = :name")})
 public class Products implements Serializable {
-
     private static final long serialVersionUID = 1L;
+    
     @Id
     @Basic(optional = false)
     @Column(name = "ID")
     @GeneratedValue
     private Integer id;
+    
     @Size(max = 255)
     @Column(name = "NAME")
     private String name;
+    
     @Lob
     @Size(max = 32700)
     @Column(name = "DESCRIPTION")
     private String description;
-    
-    
+        
     public Products() {
     }
 

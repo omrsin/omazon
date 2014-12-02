@@ -8,6 +8,7 @@ package com.omazon.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -49,7 +50,7 @@ public class Customers implements Serializable {
     @Column(name = "EMAIL")
     private String email;
     
-    @OneToMany(mappedBy="customer")
+    @OneToMany(cascade=CascadeType.ALL, mappedBy="customer")
     private List<Orders> orders;
 
     public Customers() {
@@ -82,6 +83,14 @@ public class Customers implements Serializable {
     public void setEmail(String email) {
         this.email = email;
     }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
+    }    
 
     @Override
     public int hashCode() {

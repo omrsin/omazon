@@ -5,6 +5,30 @@
     <exclude-unlisted-classes>false</exclude-unlisted-classes>
     <properties>
       <property name="javax.persistence.schema-generation.database.action" value="drop-and-create"/>
+      <property name="eclipselink.logging.level" value="FINE" />
+    </properties>
+  </persistence-unit>
+  <persistence-unit name="omazon_test" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>com.omazon.entities.Customers</class>
+    <class>com.omazon.entities.Products</class>
+    <class>com.omazon.entities.Orders</class>
+    <exclude-unlisted-classes>true</exclude-unlisted-classes>
+    <properties>
+      <!-- Common properties -->
+      <property name="javax.persistence.jdbc.driver" value="org.apache.derby.jdbc.EmbeddedDriver"/>
+      <property name="javax.persistence.jdbc.url" value="jdbc:derby:omazon_test;create=true"/>
+      <property name="javax.persistence.jdbc.user" value="omazon"/>
+      <property name="javax.persistence.jdbc.password" value="omazon"/>
+
+      <!-- EclipseLink specific properties -->
+      <property name="eclipselink.target-database" value="Derby"/>
+      <property name="eclipselink.ddl-generation" value="drop-and-create-tables"/>
+      <property name="eclipselink.debug" value="ALL"/>
+      <property name="eclipselink.weaving" value="static"/>
+      <!--<property name="eclipselink.logging.level" value="FINEST"/>-->
+      <property name="eclipselink.logging.level.sql" value="FINE"/>
+      <!--<property name="eclipselink.logging.level.cache" value="FINEST"/>-->
     </properties>
   </persistence-unit>
 </persistence>

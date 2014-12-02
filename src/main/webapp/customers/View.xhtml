@@ -19,7 +19,8 @@
                         <h:outputText value="#{customersController.selected.name}" title="#{bundle.ViewCustomersTitle_name}"/>
                         <h:outputText value="#{bundle.ViewCustomersLabel_email}"/>
                         <h:outputText value="#{customersController.selected.email}" title="#{bundle.ViewCustomersTitle_email}"/>
-                    </h:panelGrid>
+                        <h:outputText value="#{customersController.selected.orders.get(0)}"></h:outputText>
+                    </h:panelGrid>                    
                     <h:button outcome="Edit" value="#{bundle.ViewCustomersEditLink}" styleClass="btn btn-primary"/>
                     <h:commandButton action="#{customersController.destroyAndView}" value="#{bundle.ViewCustomersDestroyLink}" styleClass="btn btn-danger" />                    
                 </div>

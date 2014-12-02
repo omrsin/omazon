@@ -11,6 +11,7 @@ import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
@@ -38,9 +39,9 @@ public class Orders implements Serializable {
     private static final long serialVersionUID = 1L;
     
     @Id
-    @Basic(optional = false)
-    @NotNull
+    @Basic(optional = false)    
     @Column(name = "ID")
+    @GeneratedValue
     private Integer id;
     
     @Basic(optional = false)
@@ -48,8 +49,8 @@ public class Orders implements Serializable {
     @Column(name = "SHIPMENT_ID")
     private int shipmentId;
     
-    @ManyToOne(fetch=FetchType.EAGER)    
-    @JoinColumn(name="CUSTOMER_ID")
+    @ManyToOne(optional=false, fetch=FetchType.EAGER)    
+    @JoinColumn(name="CUSTOMER_ID", referencedColumnName="ID")
     private Customers customer;
     
     @ManyToMany

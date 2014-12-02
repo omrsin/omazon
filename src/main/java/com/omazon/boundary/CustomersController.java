@@ -4,6 +4,7 @@ import com.omazon.entities.Customers;
 import com.omazon.boundary.util.JsfUtil;
 import com.omazon.boundary.util.PaginationHelper;
 import com.omazon.business.CustomersFacade;
+import com.omazon.entities.Orders;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -80,8 +81,15 @@ public class CustomersController implements Serializable {
     }
 
     public String create() {
-        try {
+        try {            
             getFacade().create(current);
+            
+            Orders order = new Orders();
+            order.setShipmentId(1);
+            order.setCustomer(current);
+            current.getOrders().add(order);            
+            getFacade().edit(current);
+                       
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersCreated"));
             return prepareCreate();
         } catch (Exception e) {

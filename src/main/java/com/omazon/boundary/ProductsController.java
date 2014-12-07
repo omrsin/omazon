@@ -3,7 +3,10 @@ package com.omazon.boundary;
 import com.omazon.entities.Products;
 import com.omazon.boundary.util.JsfUtil;
 import com.omazon.boundary.util.PaginationHelper;
+import com.omazon.business.CustomersFacade;
 import com.omazon.business.ProductsFacade;
+import com.omazon.entities.Customers;
+import com.omazon.entities.Orders;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -26,6 +29,8 @@ public class ProductsController implements Serializable {
     private DataModel items = null;
     @EJB
     private com.omazon.business.ProductsFacade ejbFacade;
+    @EJB
+    private com.omazon.business.CustomersFacade ejbCustomersFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
 
@@ -42,6 +47,10 @@ public class ProductsController implements Serializable {
 
     private ProductsFacade getFacade() {
         return ejbFacade;
+    }
+    
+    private CustomersFacade getCustomersFacade() {
+        return ejbCustomersFacade;
     }
 
     public PaginationHelper getPagination() {
@@ -82,6 +91,14 @@ public class ProductsController implements Serializable {
     public String create() {
         try {
             getFacade().create(current);
+            
+            Customers c = getCustomersFacade().findAll().get(0);            
+            Orders order = new Orders();
+            order.setShipmentId(1);
+            order.setCustomer(c);
+            current.getOrders().add(order);
+            getFacade().edit(current);
+            
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProductsCreated"));
             return prepareCreate();
         } catch (Exception e) {

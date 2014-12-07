@@ -6,12 +6,16 @@
 package com.omazon.entities;
 
 import java.io.Serializable;
+import java.util.List;
 import javax.persistence.Basic;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.JoinTable;
 import javax.persistence.Lob;
+import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
@@ -47,6 +51,13 @@ public class Products implements Serializable {
     @Size(max = 32700)
     @Column(name = "DESCRIPTION")
     private String description;
+    
+    @ManyToMany
+    @JoinTable(
+            name="ORDERS_PRODUCTS",
+            joinColumns={@JoinColumn(name="PRODUCT_ID", referencedColumnName="ID")},
+            inverseJoinColumns={@JoinColumn(name="ORDER_ID", referencedColumnName="ID")})
+    private List<Orders> orders;
         
     public Products() {
     }
@@ -77,6 +88,14 @@ public class Products implements Serializable {
 
     public void setDescription(String description) {
         this.description = description;
+    }
+
+    public List<Orders> getOrders() {
+        return orders;
+    }
+
+    public void setOrders(List<Orders> orders) {
+        this.orders = orders;
     }
 
     @Override

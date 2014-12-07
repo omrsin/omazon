@@ -97,6 +97,14 @@ public class Orders implements Serializable {
         this.customer = customer;
     }
 
+    public List<Products> getProducts() {
+        return products;
+    }
+
+    public void setProducts(List<Products> products) {
+        this.products = products;
+    }
+
     @Override
     public int hashCode() {
         int hash = 0;

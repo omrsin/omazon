@@ -84,11 +84,11 @@ public class CustomersController implements Serializable {
         try {            
             getFacade().create(current);
             
-            Orders order = new Orders();
-            order.setShipmentId(1);
-            order.setCustomer(current);
-            current.getOrders().add(order);            
-            getFacade().edit(current);
+//            Orders order = new Orders();
+//            order.setShipmentId(1);
+//            order.setCustomer(current);
+//            current.getOrders().add(order);            
+//            getFacade().edit(current);
                        
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersCreated"));
             return prepareCreate();

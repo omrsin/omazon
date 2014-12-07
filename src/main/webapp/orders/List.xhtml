@@ -1,0 +1,54 @@
+<?xml version='1.0' encoding='UTF-8' ?>
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml"
+      xmlns:ui="http://xmlns.jcp.org/jsf/facelets"
+      xmlns:h="http://xmlns.jcp.org/jsf/html"
+      xmlns:f="http://xmlns.jcp.org/jsf/core">
+    
+    <ui:composition template="/templates/default.xhtml">
+        <ui:define name="title">
+            <h:outputText value="Buy at Omazon"></h:outputText>
+        </ui:define>
+        <ui:define name="body">
+            <h:form>
+                <div class="col-sm-12 col-md-4">
+                    <div style="margin-top: 10px; margin-bottom: 10px;">
+                        <h:outputText escape="false" value="#{bundle.ListProductsEmpty}" rendered="#{productsController.items.rowCount == 0}"/>
+                    </div>
+                    <h:panelGroup rendered="#{productsController.items.rowCount > 0}">
+                        <h:outputText value="#{productsController.pagination.pageFirstItem + 1}..#{productsController.pagination.pageLastItem + 1}/#{productsController.pagination.itemsCount}"/>&nbsp;
+                        <h:commandLink action="#{productsController.previous}" value="#{bundle.Previous} #{productsController.pagination.pageSize}" rendered="#{productsController.pagination.hasPreviousPage}"/>&nbsp;
+                        <h:commandLink action="#{productsController.next}" value="#{bundle.Next} #{productsController.pagination.pageSize}" rendered="#{productsController.pagination.hasNextPage}"/>&nbsp;
+                        <h:dataTable value="#{productsController.items}" var="item" styleClass="table table-striped">
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListProductsTitle_id}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.id}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListProductsTitle_name}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.name}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="#{bundle.ListProductsTitle_description}"/>
+                                </f:facet>
+                                <h:outputText value="#{item.description}"/>
+                            </h:column>
+                            <h:column>
+                                <f:facet name="header">
+                                    <h:outputText value="&nbsp;"/>
+                                </f:facet>
+                                <h:commandLink action="#{productsController.prepareView}" value="Add to cart!"/>                                
+                            </h:column>
+                        </h:dataTable>
+                    </h:panelGroup>
+                </div>
+            </h:form>
+        </ui:define>
+    </ui:composition>
+</html>
+

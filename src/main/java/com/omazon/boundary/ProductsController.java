@@ -92,12 +92,12 @@ public class ProductsController implements Serializable {
         try {
             getFacade().create(current);
             
-            Customers c = getCustomersFacade().findAll().get(0);            
-            Orders order = new Orders();
-            order.setShipmentId(1);
-            order.setCustomer(c);
-            current.getOrders().add(order);
-            getFacade().edit(current);
+//            Customers c = getCustomersFacade().findAll().get(0);            
+//            Orders order = new Orders();
+//            order.setShipmentId(1);
+//            order.setCustomer(c);
+//            current.getOrders().add(order);
+//            getFacade().edit(current);
             
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProductsCreated"));
             return prepareCreate();

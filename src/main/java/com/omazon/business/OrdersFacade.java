@@ -5,17 +5,17 @@
  */
 package com.omazon.business;
 
-import com.omazon.entities.Customers;
+import com.omazon.entities.Orders;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 
 /**
  *
- * @author floriment
+ * @author omar
  */
 @Stateless
-public class CustomersFacade extends AbstractFacade<Customers> {
+public class OrdersFacade extends AbstractFacade<Orders> {
     @PersistenceContext(unitName = "com_omazon_war_1.0-SNAPSHOTPU")
     private EntityManager em;
 
@@ -24,7 +24,7 @@ public class CustomersFacade extends AbstractFacade<Customers> {
         return em;
     }
 
-    public CustomersFacade() {
-        super(Customers.class);
+    public OrdersFacade() {
+        super(Orders.class);
     }    
 }

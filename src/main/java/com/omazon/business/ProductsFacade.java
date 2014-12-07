@@ -26,6 +26,5 @@ public class ProductsFacade extends AbstractFacade<Products> {
 
     public ProductsFacade() {
         super(Products.class);
-    }
-    
+    }    
 }

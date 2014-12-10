@@ -9,8 +9,14 @@ import com.omazon.entities.Customers;
 import com.omazon.entities.Orders;
 
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Map;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -22,7 +28,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @Named("productsController")
-@SessionScoped
+@RequestScoped
 public class ProductsController implements Serializable {
 
     private Products current;
@@ -33,7 +39,19 @@ public class ProductsController implements Serializable {
     private com.omazon.business.CustomersFacade ejbCustomersFacade;
     private PaginationHelper pagination;
     private int selectedItemIndex;
+    
+    private List<Products> checkItems;
 
+    public List<Products> getCheckItems() {
+        checkItems = new ArrayList<>();
+        DataModel m = getItems();
+        for (Iterator iterator = m.iterator(); iterator.hasNext();) {
+            Products next = (Products) iterator.next();
+            checkItems.add(next);
+        }
+        return checkItems;
+    }
+    
     public ProductsController() {
     }
 

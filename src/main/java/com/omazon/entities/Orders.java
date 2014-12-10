@@ -49,6 +49,11 @@ public class Orders implements Serializable {
     @Column(name = "SHIPMENT_ID")
     private int shipmentId;
     
+    @Basic(optional = false)
+    @NotNull
+    @Column(name = "STATUS")
+    private int status;
+
     @ManyToOne(optional=false, fetch=FetchType.EAGER)    
     @JoinColumn(name="CUSTOMER_ID", referencedColumnName="ID")
     private Customers customer;
@@ -67,10 +72,12 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, int shipmentId, Customers customer) {
+    public Orders(Integer id, int shipmentId, int status, List<Products> products, Customers customer) {
         this.id = id;
         this.shipmentId = shipmentId;
+        this.status = status;
         this.customer = customer;
+        this.products = products;
     }
 
     public Integer getId() {
@@ -89,6 +96,14 @@ public class Orders implements Serializable {
         this.shipmentId = shipmentId;
     }
 
+    public int getStatus() {
+        return status;
+    }
+
+    public void setStatus(int status) {
+        this.status = status;
+    }
+    
     public Customers getCustomer() {
         return customer;
     }

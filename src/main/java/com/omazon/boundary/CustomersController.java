@@ -9,6 +9,7 @@ import com.omazon.entities.Orders;
 import java.io.Serializable;
 import java.util.ResourceBundle;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.inject.Named;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.component.UIComponent;
@@ -20,7 +21,7 @@ import javax.faces.model.ListDataModel;
 import javax.faces.model.SelectItem;
 
 @Named("customersController")
-@SessionScoped
+@RequestScoped
 public class CustomersController implements Serializable {
 
     private Customers current;
@@ -81,15 +82,14 @@ public class CustomersController implements Serializable {
     }
 
     public String create() {
-        try {            
+        try {
             getFacade().create(current);
-            
+
 //            Orders order = new Orders();
 //            order.setShipmentId(1);
 //            order.setCustomer(current);
 //            current.getOrders().add(order);            
 //            getFacade().edit(current);
-                       
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersCreated"));
             return prepareCreate();
         } catch (Exception e) {
@@ -162,10 +162,7 @@ public class CustomersController implements Serializable {
     }
 
     public DataModel getItems() {
-        if (items == null) {
-            items = getPagination().createPageDataModel();
-        }
-        return items;
+        return getPagination().createPageDataModel();
     }
 
     private void recreateModel() {

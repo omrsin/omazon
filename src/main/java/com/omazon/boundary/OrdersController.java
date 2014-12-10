@@ -5,6 +5,7 @@
  */
 package com.omazon.boundary;
 
+import com.omazon.boundary.util.JsfUtil;
 import com.omazon.boundary.util.PaginationHelper;
 import com.omazon.business.CustomersFacade;
 import com.omazon.business.OrdersFacade;
@@ -12,6 +13,7 @@ import com.omazon.business.ProductsFacade;
 import com.omazon.entities.Orders;
 import java.io.Serializable;
 import javax.ejb.EJB;
+import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.inject.Named;
@@ -22,7 +24,7 @@ import javax.inject.Named;
  */
 
 @Named("ordersController")
-@SessionScoped
+@RequestScoped
 public class OrdersController implements Serializable {
     
     private Orders current;
@@ -49,6 +51,25 @@ public class OrdersController implements Serializable {
     
     public String prepareList() {
         recreateModel();
+        return "List";
+    }
+    
+    public Orders getSelected(){
+        if(current==null){
+            current = new Orders();
+        }
+        return current;
+    }
+    
+    public String create(){
+        try{
+            current.setShipmentId(2);
+            getOrdersFacade().create(current);
+            JsfUtil.addSuccessMessage("Yuhuuu");
+        }catch(Exception e)
+        {
+            JsfUtil.addErrorMessage(e.getMessage());
+        }
         return "List";
     }
 

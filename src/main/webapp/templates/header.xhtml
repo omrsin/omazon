@@ -18,7 +18,14 @@
                     <ul class="nav navbar-nav navbar-left">
                         <li><h:link outcome="/products/List" value="Products"/></li>
                         <li><h:link outcome="/customers/List" value="Customers"/></li>
-                        <li><h:link outcome="/orders/List" value="Orders"/></li>
+                        <li class="dropdown">
+                            <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-expanded="false">Orders <span class="caret"></span></a>
+                            <ul class="dropdown-menu" role="menu">
+                                <li><h:link outcome="/orders/Create" value="New"/></li>                                
+                                <li><h:link outcome="/orders/List" value="List"/></li>
+                            </ul>
+                            
+                        </li>
                     </ul>
                     <form class="navbar-form navbar-right">
                         <input type="text" class="form-control" placeholder="Search..." />

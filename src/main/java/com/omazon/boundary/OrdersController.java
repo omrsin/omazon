@@ -16,17 +16,17 @@ import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
+import javax.faces.model.ListDataModel;
 import javax.inject.Named;
 
 /**
  *
  * @author omar
  */
-
 @Named("ordersController")
 @RequestScoped
 public class OrdersController implements Serializable {
-    
+
     private Orders current;
     private DataModel items = null;
     @EJB
@@ -36,7 +36,7 @@ public class OrdersController implements Serializable {
     @EJB
     private com.omazon.business.ProductsFacade productsFacade;
     private PaginationHelper pagination;
-
+    
     public OrdersFacade getOrdersFacade() {
         return ordersFacade;
     }
@@ -47,27 +47,55 @@ public class OrdersController implements Serializable {
 
     public ProductsFacade getProductsFacade() {
         return productsFacade;
-    }    
-    
+    }
+
     public String prepareList() {
         recreateModel();
         return "List";
     }
-    
-    public Orders getSelected(){
-        if(current==null){
+
+    public Orders getSelected() {
+        if (current == null) {
             current = new Orders();
         }
         return current;
     }
-    
-    public String create(){
-        try{
+
+    public DataModel getItems() {
+        if (items == null) {
+            items = getPagination().createPageDataModel();
+        }
+        return items;
+    }
+
+    public PaginationHelper getPagination() {
+        if (pagination == null) {
+            pagination = new PaginationHelper(10) {
+
+                @Override
+                public int getItemsCount() {
+                    return getFacade().count();
+                }
+
+                @Override
+                public DataModel createPageDataModel() {
+                    return new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
+                }
+            };
+        }
+        return pagination;
+    }
+
+    private OrdersFacade getFacade() {
+        return ordersFacade;
+    }
+
+    public String create() {
+        try {
             current.setShipmentId(2);
             getOrdersFacade().create(current);
             JsfUtil.addSuccessMessage("Yuhuuu");
-        }catch(Exception e)
-        {
+        } catch (Exception e) {
             JsfUtil.addErrorMessage(e.getMessage());
         }
         return "List";

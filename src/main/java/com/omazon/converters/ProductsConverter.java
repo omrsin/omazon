@@ -23,7 +23,7 @@ public class ProductsConverter implements Converter{
 
     @Override
     public Object getAsObject(FacesContext context, UIComponent component, String value) {
-        List<Products> products = (List<Products>) context.getApplication().evaluateExpressionGet(context,"#{productsController.checkItems}", List.class);
+        List<Products> products = (List<Products>) context.getApplication().evaluateExpressionGet(context,"#{productsController.availableProducts}", List.class);
         
         for(Products p : products)
         {

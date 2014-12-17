@@ -40,16 +40,16 @@ public class ProductsController implements Serializable {
     private PaginationHelper pagination;
     private int selectedItemIndex;
     
-    private List<Products> checkItems;
+    private List<Products> availableProducts;
 
-    public List<Products> getCheckItems() {
-        checkItems = new ArrayList<>();
+    public List<Products> getAvailableProducts() {
+        availableProducts = new ArrayList<>();
         DataModel m = getItems();
         for (Iterator iterator = m.iterator(); iterator.hasNext();) {
             Products next = (Products) iterator.next();
-            checkItems.add(next);
+            availableProducts.add(next);
         }
-        return checkItems;
+        return availableProducts;
     }
     
     public ProductsController() {

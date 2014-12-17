@@ -11,6 +11,13 @@
             <h:outputText value="All Orders"></h:outputText>
         </ui:define>
         <ui:define name="body">
+            <h:form>
+                <h:selectOneMenu value="#{ordersController.customerSelected}">
+                    <f:selectItems value="#{customersController.items}" var="customer" itemLabel="#{customer.name}" itemValue="#{customer}"/>
+                </h:selectOneMenu>
+                <h:commandButton action="List" value="Search" styleClass="btn btn-primary"/>  
+
+            </h:form>
             <h:dataTable value="#{ordersController.items}" var="item" styleClass="table table-striped">
                 <h:column>
                     <f:facet name="header">

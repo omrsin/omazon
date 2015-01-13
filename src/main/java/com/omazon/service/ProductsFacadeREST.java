@@ -5,8 +5,10 @@
  */
 package com.omazon.service;
 
+import com.omazon.business.ProductsFacade;
 import com.omazon.entities.Products;
 import java.util.List;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -28,62 +30,68 @@ import javax.ws.rs.Produces;
 public class ProductsFacadeREST extends AbstractFacade<Products> {
     @PersistenceContext(unitName = "com_omazon_war_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    @EJB
+    private com.omazon.business.ProductsFacade ejbFacade;
 
     public ProductsFacadeREST() {
         super(Products.class);
+    }
+    
+    public ProductsFacade getFacade() {
+        return ejbFacade;
     }
 
     @POST
     @Override
     @Consumes({"application/xml", "application/json"})
     public void create(Products entity) {
-        super.create(entity);
+        getFacade().create(entity);
     }
 
     @PUT
     @Path("{id}")
     @Consumes({"application/xml", "application/json"})
     public void edit(@PathParam("id") Integer id, Products entity) {
-        super.edit(entity);
+        getFacade().edit(entity);
     }
 
     @DELETE
     @Path("{id}")
     public void remove(@PathParam("id") Integer id) {
-        super.remove(super.find(id));
+        getFacade().remove(getFacade().find(id));
     }
 
     @GET
     @Path("{id}")
     @Produces({"application/xml", "application/json"})
     public Products find(@PathParam("id") Integer id) {
-        return super.find(id);
+        return getFacade().find(id);
     }
 
     @GET
     @Override
     @Produces({"application/xml", "application/json"})
     public List<Products> findAll() {
-        return super.findAll();
+        return getFacade().findAll();
     }
 
     @GET
     @Path("{from}/{to}")
     @Produces({"application/xml", "application/json"})
     public List<Products> findRange(@PathParam("from") Integer from, @PathParam("to") Integer to) {
-        return super.findRange(new int[]{from, to});
+        return getFacade().findRange(new int[]{from, to});
     }
 
     @GET
     @Path("count")
     @Produces("text/plain")
     public String countREST() {
-        return String.valueOf(super.count());
+        return String.valueOf(getFacade().count());
     }
 
     @Override
     protected EntityManager getEntityManager() {
         return em;
-    }
-    
+    }    
 }

@@ -11,6 +11,7 @@
         </ui:define>
         <ui:define name="body">            
             <h:form>
+                <h:inputHidden id="id" value="#{productsController.selected.id}"/>
                 <div class="col-sm-12 col-md-3">
                     <h:panelGrid columns="2" styleClass="table" >
                         <h:outputText value="#{bundle.ViewProductsLabel_id}"/>
@@ -20,8 +21,8 @@
                         <h:outputText value="#{bundle.ViewProductsLabel_description}"/>
                         <h:outputText value="#{productsController.selected.description}" title="#{bundle.ViewProductsTitle_description}"/>
                     </h:panelGrid>
-                    <h:button outcome="Edit" value="#{bundle.ViewProductsEditLink}" styleClass="btn btn-primary"/>
-                    <h:commandLink action="#{productsController.destroyAndView}" value="#{bundle.ViewProductsDestroyLink}" styleClass="btn btn-danger" />
+                    <h:commandLink action="#{productsController.prepareEdit(productsController.selected.id)}" value="#{bundle.ViewProductsEditLink}" styleClass="btn btn-primary"/>
+                    <h:commandLink action="#{productsController.destroy(productsController.selected.id)}" value="#{bundle.ViewProductsDestroyLink}" styleClass="btn btn-danger" />
                 </div>
             </h:form>
         </ui:define>

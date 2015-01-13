@@ -39,6 +39,7 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
+                            <h:commandLink action="#{productsController.prepareView(item.id)}" value="#{bundle.ListProductsViewLink}"/>
                             <h:outputText value=" "/>
                             <h:commandLink action="#{productsController.prepareEdit(item.id)}" value="#{bundle.ListProductsEditLink}"/>
                             <h:outputText value=" "/>

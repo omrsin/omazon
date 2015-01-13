@@ -77,14 +77,18 @@ public class ProductsController implements Serializable {
             return null;
         }
     }
+    
+    public String prepareView(int id) {
+        current = (Products) getFacade().find(id);
+        return "View";
+    }
 
     public String prepareEdit(int id) {
-        System.out.println(id);
         current = (Products) getFacade().find(id);
         return "Edit";
     }
 
-    public String update() {
+    public String update(int id) {
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProductsUpdated"));

@@ -39,10 +39,11 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
+                            <h:commandLink action="#{customersController.prepareView(item.id)}" value="#{bundle.ListCustomersViewLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{customersController.prepareEdit}" value="#{bundle.ListCustomersEditLink}"/>
+                            <h:commandLink action="#{customersController.prepareEdit(item.id)}" value="#{bundle.ListCustomersEditLink}"/>
                             <h:outputText value=" "/>
-                            <h:commandLink action="#{customersController.destroy}" value="#{bundle.ListCustomersDestroyLink}"/>
+                            <h:commandLink action="#{customersController.destroy(item.id)}" value="#{bundle.ListCustomersDestroyLink}"/>
                         </h:column>
                     </h:dataTable>                        
                 </h:panelGroup>                

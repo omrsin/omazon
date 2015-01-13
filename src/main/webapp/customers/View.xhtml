@@ -11,6 +11,7 @@
         </ui:define>
         <ui:define name="body">            
             <h:form>
+                <h:inputHidden id="id" value="#{customersController.selected.id}"/>
                 <div class="col-sm-12 col-md-3">
                     <h:panelGrid columns="2" styleClass="table">
                         <h:outputText value="#{bundle.ViewCustomersLabel_id}"/>
@@ -18,11 +19,10 @@
                         <h:outputText value="#{bundle.ViewCustomersLabel_name}"/>
                         <h:outputText value="#{customersController.selected.name}" title="#{bundle.ViewCustomersTitle_name}"/>
                         <h:outputText value="#{bundle.ViewCustomersLabel_email}"/>
-                        <h:outputText value="#{customersController.selected.email}" title="#{bundle.ViewCustomersTitle_email}"/>
-                        <h:outputText value="#{customersController.selected.orders.get(0)}"></h:outputText>
+                        <h:outputText value="#{customersController.selected.email}" title="#{bundle.ViewCustomersTitle_email}"/>                        
                     </h:panelGrid>                    
-                    <h:button outcome="Edit" value="#{bundle.ViewCustomersEditLink}" styleClass="btn btn-primary"/>
-                    <h:commandButton action="#{customersController.destroyAndView}" value="#{bundle.ViewCustomersDestroyLink}" styleClass="btn btn-danger" />                    
+                    <h:commandLink action="#{customersController.prepareEdit(customersController.selected.id)}" value="#{bundle.ViewCustomersEditLink}" styleClass="btn btn-primary"/>
+                    <h:commandLink action="#{customersController.destroy(customersController.selected.id)}" value="#{bundle.ViewCustomersDestroyLink}" styleClass="btn btn-danger" />
                 </div>
             </h:form>
         </ui:define>

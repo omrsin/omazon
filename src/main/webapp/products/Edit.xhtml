@@ -13,6 +13,7 @@
         <ui:define name="body">
             <h:form p:role="form">
                 <div class="col-sm-12 col-md-4">
+                    <h:inputHidden id="id" value="#{productsController.selected.id}"/>                    
                     <div class="form-group">
                         <h:outputLabel value="#{bundle.EditProductsLabel_name}" for="name" />
                         <h:inputText id="name" value="#{productsController.selected.name}" title="#{bundle.EditProductsTitle_name}" p:placeholder="Edit product's name" styleClass="form-control"/>
@@ -21,8 +22,8 @@
                         <h:outputLabel value="#{bundle.EditProductsLabel_description}" for="description" />
                         <h:inputTextarea id="description" value="#{productsController.selected.description}" title="#{bundle.EditProductsTitle_description}" p:placeholder="Edit product's description" styleClass="form-control" />
                     </div>
-                    <h:commandLink action="#{productsController.update}" value="#{bundle.EditProductsSaveLink}" type="submit" styleClass="btn btn-default" />                    
-                    <h:button outcome="View" value="#{bundle.EditProductsViewLink}" styleClass="btn btn-link pull-right" />                    
+                    <h:commandLink action="#{productsController.update(productsController.selected.id)}" value="#{bundle.EditProductsSaveLink}" type="submit" styleClass="btn btn-default" />
+                    <h:commandLink action="#{productsController.prepareView(productsController.selected.id)}" value="#{bundle.EditProductsViewLink}" styleClass="btn btn-link pull-right" />                    
                 </div>
             </h:form>
         </ui:define>

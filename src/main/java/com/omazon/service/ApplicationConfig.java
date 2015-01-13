@@ -30,6 +30,7 @@ public class ApplicationConfig extends Application {
      */
     private void addRestResourceClasses(Set<Class<?>> resources) {
         resources.add(com.omazon.service.CustomersFacadeREST.class);
+        resources.add(com.omazon.service.OrdersFacadeREST.class);
         resources.add(com.omazon.service.ProductsFacadeREST.class);
     }
     

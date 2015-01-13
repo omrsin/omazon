@@ -15,7 +15,6 @@ import com.omazon.entities.Orders;
 import java.io.Serializable;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
-import javax.enterprise.context.SessionScoped;
 import javax.faces.model.DataModel;
 import javax.faces.model.ListDataModel;
 import javax.inject.Named;
@@ -72,38 +71,15 @@ public class OrdersController implements Serializable {
     }
 
     public DataModel getItems() {
-        System.out.println("Hello first");
-        if (items == null) {
-            System.out.println("Hello");
-            if (customerSelected != null) {
-                items = getPagination(true).createPageDataModel();
-            } else {
-                items = getPagination(false).createPageDataModel();
-            }
+        if(getCustomerSelected() != null){
+            items = new ListDataModel(getOrdersFacade().findByCustomer(customerSelected));
+        } else {
+            items = new ListDataModel(getOrdersFacade().findAll());
         }
         return items;
     }
-
-    public PaginationHelper getPagination(final boolean param) {
-        if (pagination == null) {
-            pagination = new PaginationHelper(10) {
-
-                @Override
-                public int getItemsCount() {
-                    return param ? getFacade().findByCustomer(customerSelected).size() : getFacade().count();
-                }
-
-                @Override
-                public DataModel createPageDataModel() {
-                    return param ? new ListDataModel(getFacade().findByCustomerGetRange(customerSelected, new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}))
-                            : new ListDataModel(getFacade().findRange(new int[]{getPageFirstItem(), getPageFirstItem() + getPageSize()}));
-                }
-            };
-        }
-        return pagination;
-
-    }
-
+           
+        
     private OrdersFacade getFacade() {
         return ordersFacade;
     }
@@ -112,11 +88,11 @@ public class OrdersController implements Serializable {
         try {
             current.setShipmentId(2);
             getOrdersFacade().create(current);
-            JsfUtil.addSuccessMessage("Yuhuuu");
+            JsfUtil.addSuccessMessage("The order was succesfully created");
         } catch (Exception e) {
             JsfUtil.addErrorMessage(e.getMessage());
         }
-        return "List";
+        return "Create";
     }
 
     private void recreateModel() {

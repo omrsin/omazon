@@ -29,7 +29,8 @@ public class OrdersFacade extends AbstractFacade<Orders> {
     
     public List<Orders> findByCustomer(Customers customer)
     {
-        return em.createNamedQuery("Orders.findByCustomerId").setParameter("customerId", customer.getId()).getResultList();
+        List resultList = em.createNamedQuery("Orders.findByCustomerId").setParameter("customerId", customer.getId()).getResultList();
+        return resultList;
     }
     
     public List<Orders> findByCustomerGetRange(Customers customer,int[] range)

@@ -6,7 +6,6 @@
 package com.omazon.boundary;
 
 import com.omazon.boundary.util.JsfUtil;
-import com.omazon.boundary.util.PaginationHelper;
 import com.omazon.business.CustomersFacade;
 import com.omazon.business.OrdersFacade;
 import com.omazon.business.ProductsFacade;
@@ -15,7 +14,6 @@ import com.omazon.entities.Orders;
 import com.omazon.entities.Products;
 import java.io.Serializable;
 import java.util.ArrayList;
-import java.util.Iterator;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
@@ -115,6 +113,11 @@ public class OrdersController implements Serializable {
             JsfUtil.addErrorMessage(e.getMessage());
         }
         return "Create";
+    }
+    
+    public String prepareView(int id) {
+        current = (Orders) getFacade().find(id);
+        return "View";
     }
 
     private void recreateModel() {

@@ -30,22 +30,28 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="customer"/>
+                                <h:outputText value="Customer"/>
                             </f:facet>
                             <h:outputText value="#{item.customer.name}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="shipmentId"/>
+                                <h:outputText value="Shipment"/>
                             </f:facet>
                             <h:outputText value="#{item.shipmentId}"/>
                         </h:column>
                         <h:column>
                             <f:facet name="header">
-                                <h:outputText value="status"/>
+                                <h:outputText value="Status"/>
                             </f:facet>
                             <h:outputText value="#{item.status}"/>
                         </h:column>
+<!--                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{ordersController.prepareView(item.id)}" value="View"/>                            
+                        </h:column>-->
                     </h:dataTable>
                 </h:panelGroup>
             </h:form>

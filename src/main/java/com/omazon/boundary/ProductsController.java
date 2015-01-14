@@ -34,7 +34,7 @@ public class ProductsController implements Serializable {
 
     public List<Products> getAvailableProducts() {
         availableProducts = new ArrayList<>();
-        DataModel m = getItems();
+        DataModel m = getItems();        
         for (Iterator iterator = m.iterator(); iterator.hasNext();) {
             Products next = (Products) iterator.next();
             availableProducts.add(next);

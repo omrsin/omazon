@@ -12,7 +12,12 @@ import com.omazon.business.OrdersFacade;
 import com.omazon.business.ProductsFacade;
 import com.omazon.entities.Customers;
 import com.omazon.entities.Orders;
+import com.omazon.entities.Products;
 import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.List;
+import java.util.Random;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
@@ -35,8 +40,8 @@ public class OrdersController implements Serializable {
     private com.omazon.business.CustomersFacade customersFacade;
     @EJB
     private com.omazon.business.ProductsFacade productsFacade;
-    private PaginationHelper pagination;
     private Customers customerSelected;
+    private DataModel availableProducts;
 
     public Customers getCustomerSelected() {
         return customerSelected;
@@ -45,6 +50,11 @@ public class OrdersController implements Serializable {
     public void setCustomerSelected(Customers customerSelected) {
         this.customerSelected = customerSelected;
     }
+    
+    public DataModel getAvailableProducts() {        
+        availableProducts = new ListDataModel(getProductsFacade().findAll());
+        return availableProducts;
+    } 
 
     public OrdersFacade getOrdersFacade() {
         return ordersFacade;
@@ -86,7 +96,19 @@ public class OrdersController implements Serializable {
 
     public String create() {
         try {
-            current.setShipmentId(2);
+            List<Products> products = (List<Products>)availableProducts.getWrappedData();
+            List<Products> selectedProducts = new ArrayList<Products>();
+            for (Products product : products) { 
+                if (product.isSelected()) { 
+                    selectedProducts.add(product); 
+                } 
+            }
+            current.setProducts(selectedProducts);
+            
+            Random rand = new Random();
+            int randomNum = rand.nextInt(6);
+            current.setShipmentId(randomNum);
+            
             getOrdersFacade().create(current);
             JsfUtil.addSuccessMessage("The order was succesfully created");
         } catch (Exception e) {

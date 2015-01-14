@@ -19,6 +19,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import javax.xml.bind.annotation.XmlRootElement;
@@ -51,6 +52,9 @@ public class Products implements Serializable {
     @Size(max = 32700)
     @Column(name = "DESCRIPTION")
     private String description;
+    
+    @Transient
+    private boolean selected;
     
     @ManyToMany
     @JoinTable(
@@ -96,6 +100,14 @@ public class Products implements Serializable {
 
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
+    }
+    
+    public boolean isSelected() { 
+        return selected;
+    }  
+    
+    public void setSelected(boolean selected) { 
+        this.selected = selected;
     }
 
     @Override

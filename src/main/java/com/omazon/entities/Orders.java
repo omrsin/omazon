@@ -47,12 +47,7 @@ public class Orders implements Serializable {
     
     @ManyToOne(cascade=CascadeType.ALL, optional=false, fetch=FetchType.EAGER)
     @JoinColumn(name="SHIPMENT_ID", referencedColumnName="ID")
-    private Shipments shipment;
-    
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "STATUS")
-    private int status;
+    private Shipments shipment;    
 
     @ManyToOne(optional=false, fetch=FetchType.EAGER)    
     @JoinColumn(name="CUSTOMER_ID", referencedColumnName="ID")
@@ -72,10 +67,9 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, Shipments shipment, int status, List<Products> products, Customers customer) {
+    public Orders(Integer id, Shipments shipment, List<Products> products, Customers customer) {
         this.id = id;
         this.shipment = shipment;
-        this.status = status;
         this.customer = customer;
         this.products = products;
     }
@@ -96,14 +90,6 @@ public class Orders implements Serializable {
         this.shipment = shipment;
     }
 
-    public int getStatus() {
-        return status;
-    }
-
-    public void setStatus(int status) {
-        this.status = status;
-    }
-    
     public Customers getCustomer() {
         return customer;
     }

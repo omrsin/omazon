@@ -82,6 +82,20 @@ public class Shipments implements Serializable {
     public void setOrders(List<Orders> orders) {
         this.orders = orders;
     }
+    
+    public String writtenStatus() {
+        String writtenStatus = "";
+        switch(this.status) {
+            case 0: writtenStatus = "Not Delivered";
+                    break;
+            case 1: writtenStatus = "Delivered";
+                    break;
+            case 2: writtenStatus = "In Progress";
+                    break;
+        }     
+        
+        return writtenStatus;
+    }
 
     @Override
     public int hashCode() {

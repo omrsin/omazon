@@ -2,18 +2,18 @@
 <Scene Scope="Project" version="2">
     <Scope Scope="Faces Configuration Only"/>
     <Scope Scope="Project">
+        <Node id="index.xhtml" x="650" y="300" zoom="true"/>
+        <Node id="products/List.xhtml" x="900" y="300" zoom="true"/>
+        <Node id="customers/List.xhtml" x="150" y="450" zoom="true"/>
+        <Node id="templates/content.xhtml" x="400" y="150" zoom="true"/>
+        <Node id="products/Edit.xhtml" x="1150" y="150" zoom="true"/>
+        <Node id="products/View.xhtml" x="150" y="600" zoom="true"/>
         <Node id="customers/Create.xhtml" x="150" y="300" zoom="true"/>
+        <Node id="templates/default.xhtml" x="900" y="150" zoom="true"/>
         <Node id="templates/header.xhtml" x="150" y="150" zoom="true"/>
         <Node id="products/Create.xhtml" x="650" y="150" zoom="true"/>
-        <Node id="customers/View.xhtml" x="400" y="300" zoom="true"/>
-        <Node id="templates/content.xhtml" x="400" y="150" zoom="true"/>
-        <Node id="index.xhtml" x="650" y="300" zoom="true"/>
-        <Node id="customers/List.xhtml" x="150" y="450" zoom="true"/>
-        <Node id="templates/default.xhtml" x="900" y="150" zoom="true"/>
         <Node id="customers/Edit.xhtml" x="400" y="450" zoom="true"/>
-        <Node id="products/Edit.xhtml" x="1150" y="150" zoom="true"/>
-        <Node id="products/List.xhtml" x="900" y="300" zoom="true"/>
-        <Node id="products/View.xhtml" x="150" y="600" zoom="true"/>
+        <Node id="customers/View.xhtml" x="400" y="300" zoom="true"/>
     </Scope>
     <Scope Scope="All Faces Configurations"/>
 </Scene>

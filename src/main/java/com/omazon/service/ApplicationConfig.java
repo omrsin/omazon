@@ -32,6 +32,7 @@ public class ApplicationConfig extends Application {
         resources.add(com.omazon.service.CustomersFacadeREST.class);
         resources.add(com.omazon.service.OrdersFacadeREST.class);
         resources.add(com.omazon.service.ProductsFacadeREST.class);
+        resources.add(com.omazon.service.ShipmentsFacadeREST.class);
     }
     
 }

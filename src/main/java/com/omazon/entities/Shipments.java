@@ -16,6 +16,7 @@ import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 import javax.validation.constraints.NotNull;
 import javax.xml.bind.annotation.XmlRootElement;
 
@@ -31,21 +32,45 @@ import javax.xml.bind.annotation.XmlRootElement;
     @NamedQuery(name = "Shipments.findById", query = "SELECT s FROM Shipments s WHERE s.id = :id"),
     @NamedQuery(name = "Shipments.findByStatus", query = "SELECT s FROM Shipments s WHERE s.status = :status")})
 public class Shipments implements Serializable {
+
     private static final long serialVersionUID = 1L;
-    
+
     @Id
     @Basic(optional = false)
     @NotNull
     @Column(name = "ID")
     private Integer id;
-    
+
     @Basic(optional = false)
     @NotNull
     @Column(name = "STATUS")
     private int status;
-    
-    @OneToMany(cascade=CascadeType.ALL, mappedBy="shipment")
+
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment")
     private List<Orders> orders;
+
+    @Transient
+    private String writtenStatus;
+
+    public String getWrittenStatus() {
+        switch (this.status) {
+            case 0:
+                writtenStatus = "Not Delivered";
+                break;
+            case 1:
+                writtenStatus = "Delivered";
+                break;
+            case 2:
+                writtenStatus = "In Progress";
+                break;
+        }
+
+        return writtenStatus;
+    }
+
+    public void setWrittenStatus(String writtenStatus) {
+        this.writtenStatus = writtenStatus;
+    }
 
     public Shipments() {
     }
@@ -74,7 +99,7 @@ public class Shipments implements Serializable {
     public void setStatus(int status) {
         this.status = status;
     }
-    
+
     public List<Orders> getOrders() {
         return orders;
     }
@@ -106,5 +131,5 @@ public class Shipments implements Serializable {
     @Override
     public String toString() {
         return "com.omazon.entities.Shipments[ id=" + id + " ]";
-    }    
+    }
 }

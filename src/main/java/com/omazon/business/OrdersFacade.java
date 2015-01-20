@@ -7,7 +7,10 @@ package com.omazon.business;
 
 import com.omazon.entities.Customers;
 import com.omazon.entities.Orders;
+import com.omazon.entities.Shipments;
 import java.util.List;
+import java.util.Random;
+import javax.ejb.EJB;
 import javax.ejb.Stateless;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
@@ -21,6 +24,9 @@ import javax.persistence.Query;
 public class OrdersFacade extends AbstractFacade<Orders> {
     @PersistenceContext(unitName = "com_omazon_war_1.0-SNAPSHOTPU")
     private EntityManager em;
+    
+    @EJB
+    private com.omazon.business.ShipmentsFacade shipmentsFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -43,5 +49,21 @@ public class OrdersFacade extends AbstractFacade<Orders> {
 
     public OrdersFacade() {
         super(Orders.class);
-    }    
+    }
+    
+    @Override
+    public void create(Orders order){        
+        List<Shipments> shipments = shipmentsFacade.findByStatus(0);
+        Shipments shipment;        
+        
+        if(shipments.size() == 0) {            
+            shipment = new Shipments(shipmentsFacade.count()+1, 0);
+        } else {
+            shipment = shipments.get(0);
+        }
+        
+        order.setShipment(shipment);
+        
+        getEntityManager().persist(order);
+    }
 }

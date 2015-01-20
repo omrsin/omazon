@@ -8,6 +8,7 @@ package com.omazon.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.FetchType;
@@ -33,7 +34,7 @@ import javax.xml.bind.annotation.XmlRootElement;
 @NamedQueries({
     @NamedQuery(name = "Orders.findAll", query = "SELECT o FROM Orders o"),
     @NamedQuery(name = "Orders.findById", query = "SELECT o FROM Orders o WHERE o.id = :id"),
-    @NamedQuery(name = "Orders.findByShipmentId", query = "SELECT o FROM Orders o WHERE o.shipmentId = :shipmentId"),
+    @NamedQuery(name = "Orders.findByShipmentId", query = "SELECT o FROM Orders o WHERE o.shipment.id = :shipmentId"),
     @NamedQuery(name = "Orders.findByCustomerId", query = "SELECT o FROM Orders o WHERE o.customer.id = :customerId")})
 public class Orders implements Serializable {
     private static final long serialVersionUID = 1L;
@@ -44,10 +45,9 @@ public class Orders implements Serializable {
     @GeneratedValue
     private Integer id;
     
-    @Basic(optional = false)
-    @NotNull
-    @Column(name = "SHIPMENT_ID")
-    private int shipmentId;
+    @ManyToOne(cascade=CascadeType.ALL, optional=false, fetch=FetchType.EAGER)
+    @JoinColumn(name="SHIPMENT_ID", referencedColumnName="ID")
+    private Shipments shipment;
     
     @Basic(optional = false)
     @NotNull
@@ -72,9 +72,9 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public Orders(Integer id, int shipmentId, int status, List<Products> products, Customers customer) {
+    public Orders(Integer id, Shipments shipment, int status, List<Products> products, Customers customer) {
         this.id = id;
-        this.shipmentId = shipmentId;
+        this.shipment = shipment;
         this.status = status;
         this.customer = customer;
         this.products = products;
@@ -88,12 +88,12 @@ public class Orders implements Serializable {
         this.id = id;
     }
 
-    public int getShipmentId() {
-        return shipmentId;
+    public Shipments getShipment() {
+        return shipment;
     }
 
-    public void setShipmentId(int shipmentId) {
-        this.shipmentId = shipmentId;
+    public void setShipment(Shipments shipment) {
+        this.shipment = shipment;
     }
 
     public int getStatus() {

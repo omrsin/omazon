@@ -15,7 +15,6 @@ import com.omazon.entities.Products;
 import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import javax.ejb.EJB;
 import javax.enterprise.context.RequestScoped;
 import javax.faces.model.DataModel;
@@ -101,11 +100,7 @@ public class OrdersController implements Serializable {
                     selectedProducts.add(product); 
                 } 
             }
-            current.setProducts(selectedProducts);
-            
-            Random rand = new Random();
-            int randomNum = rand.nextInt(6);
-            current.setShipmentId(randomNum);
+            current.setProducts(selectedProducts);           
             
             getOrdersFacade().create(current);
             JsfUtil.addSuccessMessage("The order was succesfully created");

@@ -11,7 +11,10 @@ import javax.persistence.Basic;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -48,6 +51,10 @@ public class Shipments implements Serializable {
 
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment")
     private List<Orders> orders;
+    
+    @ManyToOne(cascade=CascadeType.ALL, optional=false, fetch=FetchType.EAGER)
+    @JoinColumn(name="TRUCK_ID", referencedColumnName="ID")
+    private Trucks truck;
 
     @Transient
     private String writtenStatus;
@@ -107,6 +114,14 @@ public class Shipments implements Serializable {
     public void setWrittenStatus(String writtenStatus) {
         this.writtenStatus = writtenStatus;
     }
+
+    public Trucks getTruck() {
+        return truck;
+    }
+
+    public void setTruck(Trucks truck) {
+        this.truck = truck;
+    }    
 
     @Override
     public int hashCode() {

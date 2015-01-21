@@ -52,26 +52,6 @@ public class Shipments implements Serializable {
     @Transient
     private String writtenStatus;
 
-    public String getWrittenStatus() {
-        switch (this.status) {
-            case 0:
-                writtenStatus = "Not Delivered";
-                break;
-            case 1:
-                writtenStatus = "Delivered";
-                break;
-            case 2:
-                writtenStatus = "In Progress";
-                break;
-        }
-
-        return writtenStatus;
-    }
-
-    public void setWrittenStatus(String writtenStatus) {
-        this.writtenStatus = writtenStatus;
-    }
-
     public Shipments() {
     }
 
@@ -108,18 +88,24 @@ public class Shipments implements Serializable {
         this.orders = orders;
     }
     
-    public String writtenStatus() {
-        String writtenStatus = "";
-        switch(this.status) {
-            case 0: writtenStatus = "Not Delivered";
-                    break;
-            case 1: writtenStatus = "Delivered";
-                    break;
-            case 2: writtenStatus = "In Progress";
-                    break;
-        }     
-        
+    public String getWrittenStatus() {
+        switch (this.status) {
+            case 0:
+                writtenStatus = "Not Delivered";
+                break;
+            case 1:
+                writtenStatus = "Delivered";
+                break;
+            case 2:
+                writtenStatus = "In Progress";
+                break;
+        }
+
         return writtenStatus;
+    }
+
+    public void setWrittenStatus(String writtenStatus) {
+        this.writtenStatus = writtenStatus;
     }
 
     @Override

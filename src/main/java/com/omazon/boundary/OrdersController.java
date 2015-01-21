@@ -67,6 +67,7 @@ public class OrdersController implements Serializable {
 
     public String prepareList() {
         recreateModel();
+        current = null;
         return "List";
     }
 
@@ -77,7 +78,7 @@ public class OrdersController implements Serializable {
         return current;
     }
 
-    public DataModel getItems() {
+    public DataModel getItems() {        
         if(getCustomerSelected() != null){
             items = new ListDataModel(getOrdersFacade().findByCustomer(customerSelected));
         } else {
@@ -108,12 +109,7 @@ public class OrdersController implements Serializable {
             JsfUtil.addErrorMessage(e.getMessage());
         }
         return "Create";
-    }
-    
-    public String prepareView(int id) {
-        current = (Orders) getFacade().find(id);
-        return "View";
-    }
+    }    
 
     private void recreateModel() {
         items = null;

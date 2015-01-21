@@ -8,6 +8,7 @@ package com.omazon.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -30,11 +31,18 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "SHIPMENTS")
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "Shipments.findAll", query = "SELECT s FROM Shipments s"),
     @NamedQuery(name = "Shipments.findById", query = "SELECT s FROM Shipments s WHERE s.id = :id"),
-    @NamedQuery(name = "Shipments.findByStatus", query = "SELECT s FROM Shipments s WHERE s.status = :status")})
+    @NamedQuery(name = "Shipments.findByStatus", query = "SELECT s FROM Shipments s WHERE s.status = :status"),
+    @NamedQuery(name = "Shipments.countByStatus", query = "SELECT COUNT(s) FROM Shipments s WHERE s.status = :status"),
+    @NamedQuery(name = "Shipments.maxByStatus", query = "SELECT s FROM Shipments s WHERE s.id = (SELECT MAX(x.id) FROM Shipments x WHERE x.status = :status)")})
 public class Shipments implements Serializable {
+    
+    public static final int NOT_DELIVERED = 0;
+    public static final int DELIVERED = 1;
+    public static final int IN_PROGRESS = 2;
 
     private static final long serialVersionUID = 1L;
 
@@ -49,7 +57,7 @@ public class Shipments implements Serializable {
     @Column(name = "STATUS")
     private int status;
 
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "shipment", fetch=FetchType.EAGER)
     private List<Orders> orders;
     
     @ManyToOne(cascade=CascadeType.ALL, optional=false, fetch=FetchType.EAGER)
@@ -97,13 +105,13 @@ public class Shipments implements Serializable {
     
     public String getWrittenStatus() {
         switch (this.status) {
-            case 0:
+            case NOT_DELIVERED:
                 writtenStatus = "Not Delivered";
                 break;
-            case 1:
+            case DELIVERED:
                 writtenStatus = "Delivered";
                 break;
-            case 2:
+            case IN_PROGRESS:
                 writtenStatus = "In Progress";
                 break;
         }

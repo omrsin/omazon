@@ -33,4 +33,13 @@ public class ShipmentsFacade extends AbstractFacade<Shipments> {
         List resultList = em.createNamedQuery("Shipments.findByStatus").setParameter("status", status).getResultList();
         return resultList;
     }    
+
+    public int countByStatus(int status) {
+        return ((Long)em.createNamedQuery("Shipments.countByStatus").setParameter("status", status).getSingleResult()).intValue();        
+    }
+    
+    public Shipments maxByStatus(int status) {
+        Shipments shipment = (Shipments) em.createNamedQuery("Shipments.maxByStatus").setParameter("status", status).getSingleResult();        
+        return shipment;
+    }
 }

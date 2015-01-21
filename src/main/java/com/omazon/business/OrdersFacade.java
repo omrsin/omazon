@@ -53,13 +53,16 @@ public class OrdersFacade extends AbstractFacade<Orders> {
     
     @Override
     public void create(Orders order){        
-        List<Shipments> shipments = shipmentsFacade.findByStatus(0);
+        int notDeliveredShipments = shipmentsFacade.countByStatus(Shipments.NOT_DELIVERED);
         Shipments shipment;        
         
-        if(shipments.size() == 0) {            
+        if(notDeliveredShipments == 0) {            
             shipment = new Shipments(shipmentsFacade.count()+1, 0);
         } else {
-            shipment = shipments.get(0);
+            shipment = shipmentsFacade.maxByStatus(Shipments.NOT_DELIVERED);
+            if(shipment.getOrders().size() >= 3) {
+                shipment = new Shipments(shipmentsFacade.count()+1, 0);
+            }
         }
         
         order.setShipment(shipment);

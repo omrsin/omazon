@@ -7,8 +7,8 @@
     </h:head>
     <h:body>
         <h:form>
-        Delivery Event simulator
-        <h:commandLink action="#{deliveryEventController.generateDeliveryEvent()}" value="Click Me"/>
+            <h:inputText value="#{deliveryEventController.text}"/>
+            <h:commandLink action="#{deliveryEventController.generateDeliveryEvent()}" value="Click Me"/>
         </h:form>
     </h:body>
 </html>

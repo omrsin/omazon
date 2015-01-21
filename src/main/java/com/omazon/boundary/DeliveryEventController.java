@@ -27,12 +27,21 @@ public class DeliveryEventController {
     private JMSContext context;
     
     private String shipmentId;
+    private String text;
+
+    public String getText() {
+        return text;
+    }
+
+    public void setText(String text) {
+        this.text = text;
+    }
 
     public DeliveryEventController() {
     }
     
     public String generateDeliveryEvent(){
-        sendJMSMessageToDelivery("Hellooooo");
+        sendJMSMessageToDelivery(text);
         return "/generate_events";
     }
 

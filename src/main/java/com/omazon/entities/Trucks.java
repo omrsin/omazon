@@ -8,9 +8,11 @@ package com.omazon.entities;
 import java.io.Serializable;
 import java.util.List;
 import javax.persistence.Basic;
+import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
@@ -26,30 +28,32 @@ import javax.xml.bind.annotation.XmlRootElement;
 @Entity
 @Table(name = "TRUCKS")
 @XmlRootElement
+@Cacheable(false)
 @NamedQueries({
     @NamedQuery(name = "Trucks.findAll", query = "SELECT t FROM Trucks t"),
     @NamedQuery(name = "Trucks.findById", query = "SELECT t FROM Trucks t WHERE t.id = :id"),
     @NamedQuery(name = "Trucks.findByLongitude", query = "SELECT t FROM Trucks t WHERE t.longitude = :longitude"),
-    @NamedQuery(name = "Trucks.findByLatitude", query = "SELECT t FROM Trucks t WHERE t.latitude = :latitude")})
+    @NamedQuery(name = "Trucks.findByLatitude", query = "SELECT t FROM Trucks t WHERE t.latitude = :latitude"),
+    @NamedQuery(name = "Trucks.max", query = "SELECT t FROM Trucks t WHERE t.id = (SELECT MAX(s.id) FROM Trucks s)")})
 public class Trucks implements Serializable {
     
     private static final long serialVersionUID = 1L;
     
     @Id
     @Basic(optional = false)
-    @NotNull
-    @Column(name = "ID")    
+    @Column(name = "ID")
+    @GeneratedValue
     private Integer id;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "LONGITUDE")
-    private float longitude;
+    private double longitude;
     
     @Basic(optional = false)
     @NotNull
     @Column(name = "LATITUDE")
-    private float latitude;
+    private double latitude;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "truck")
     private List<Shipments> shipments;
@@ -61,8 +65,7 @@ public class Trucks implements Serializable {
         this.id = id;
     }
 
-    public Trucks(Integer id, float longitude, float latitude) {
-        this.id = id;
+    public Trucks(double longitude, double latitude) {        
         this.longitude = longitude;
         this.latitude = latitude;
     }
@@ -75,19 +78,19 @@ public class Trucks implements Serializable {
         this.id = id;
     }
 
-    public float getLongitude() {
+    public double getLongitude() {
         return longitude;
     }
 
-    public void setLongitude(float longitude) {
+    public void setLongitude(double longitude) {
         this.longitude = longitude;
     }
 
-    public float getLatitude() {
+    public double getLatitude() {
         return latitude;
     }
 
-    public void setLatitude(float latitude) {
+    public void setLatitude(double latitude) {
         this.latitude = latitude;
     }
 

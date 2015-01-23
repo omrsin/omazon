@@ -7,8 +7,12 @@
     </h:head>
     <h:body>
         <h:form>
-            <h:inputText value="#{deliveryEventController.text}"/>
-            <h:commandLink action="#{deliveryEventController.generateDeliveryEvent()}" value="Click Me"/>
+            <h:inputText value="#{deliveryEventController.text}"  />
+            <h:commandLink action="#{deliveryEventController.generateDeliveryEvent()}" value="Simulate Delivery Event"/>
+        </h:form>
+        <h:form>
+            <h:inputText value="#{positionEventController.text}"  />
+            <h:commandLink action="#{positionEventController.generateDeliveryEvent()}" value="Simulate Delivery Event"/>
         </h:form>
     </h:body>
 </html>

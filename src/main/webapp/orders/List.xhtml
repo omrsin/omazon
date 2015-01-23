@@ -46,6 +46,18 @@
                             </f:facet>
                             <h:outputText value="#{item.shipment.writtenStatus}"/>
                         </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Latitude"/>
+                            </f:facet>
+                            <h:outputText value="#{item.shipment.truck.latitude}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Longitude"/>
+                            </f:facet>
+                            <h:outputText value="#{item.shipment.truck.longitude}"/>
+                        </h:column>
                     </h:dataTable>
                 </h:panelGroup>
             </h:form>

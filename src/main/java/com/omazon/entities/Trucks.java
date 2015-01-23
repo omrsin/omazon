@@ -12,6 +12,7 @@ import javax.persistence.Cacheable;
 import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.NamedQueries;
@@ -41,8 +42,8 @@ public class Trucks implements Serializable {
     
     @Id
     @Basic(optional = false)
+    @NotNull
     @Column(name = "ID")
-    @GeneratedValue
     private Integer id;
     
     @Basic(optional = false)
@@ -55,7 +56,7 @@ public class Trucks implements Serializable {
     @Column(name = "LATITUDE")
     private double latitude;
     
-    @OneToMany(cascade = CascadeType.ALL, mappedBy = "truck")
+    @OneToMany(cascade = CascadeType.ALL, mappedBy = "truck", fetch=FetchType.EAGER)
     private List<Shipments> shipments;
 
     public Trucks() {
@@ -65,7 +66,8 @@ public class Trucks implements Serializable {
         this.id = id;
     }
 
-    public Trucks(double longitude, double latitude) {        
+    public Trucks(Integer id, double longitude, double latitude) {
+        this.id = id;
         this.longitude = longitude;
         this.latitude = latitude;
     }

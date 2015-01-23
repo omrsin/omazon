@@ -29,7 +29,7 @@ public class TrucksFacade extends AbstractFacade<Trucks> {
         super(Trucks.class);
     }
     
-    public Trucks max(int status) {
+    public Trucks max() {
         Trucks truck = (Trucks) em.createNamedQuery("Trucks.max").getSingleResult();        
         return truck;
     }

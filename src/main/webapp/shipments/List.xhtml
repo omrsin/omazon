@@ -36,6 +36,24 @@
                         </h:column>
                         <h:column>
                             <f:facet name="header">
+                                <h:outputText value="Truck"/>
+                            </f:facet>
+                            <h:outputText value="#{item.truck.id}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Latitude"/>
+                            </f:facet>
+                            <h:outputText value="#{item.truck.latitude}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="Longitude"/>
+                            </f:facet>
+                            <h:outputText value="#{item.truck.longitude}"/>
+                        </h:column>
+                        <h:column>
+                            <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
                             <h:commandButton action="#{shipmentsController.updateToDeliveredStatus(item.id)}" value="Mark as Delivered" rendered="#{item.status == 0}" styleClass="pull-right btn btn-primary"/>                            

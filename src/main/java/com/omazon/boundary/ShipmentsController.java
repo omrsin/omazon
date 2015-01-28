@@ -38,6 +38,9 @@ public class ShipmentsController implements Serializable {
     @EJB
     private com.omazon.business.ShipmentsFacade ejbFacade;
     
+    @EJB
+    private com.omazon.business.email.EmailSessionBean ejbEmail;
+    
     private List<Shipments> availableShipments;
 
     public List<Shipments> getAvailableShipments() {
@@ -115,6 +118,14 @@ public class ShipmentsController implements Serializable {
     
     public Shipments getShipments(java.lang.Integer id) {
         return ejbFacade.find(id);
+    }
+    
+    public void sendEmail() {
+        String to = "omrsin@gmail.com";
+        String subject = "This is just a test with java mail";
+        String body = "This might be longer than I thought, however it is an email!";
+        
+        ejbEmail.sendEmail(to, subject, body);
     }
 
     @FacesConverter(forClass = Shipments.class)

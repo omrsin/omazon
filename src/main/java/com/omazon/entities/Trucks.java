@@ -15,6 +15,7 @@ import javax.persistence.Entity;
 import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
+import javax.persistence.Lob;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -55,6 +56,11 @@ public class Trucks implements Serializable {
     @NotNull
     @Column(name = "LATITUDE")
     private double latitude;
+    
+    @Basic(optional = true)
+    @Column(name = "EXCEP_DESC")
+    @Lob    
+    private String excepDesc;
     
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "truck", fetch=FetchType.EAGER)
     private List<Shipments> shipments;
@@ -102,7 +108,15 @@ public class Trucks implements Serializable {
 
     public void setShipments(List<Shipments> shipments) {
         this.shipments = shipments;
-    }    
+    }
+
+    public String getExcepDesc() {
+        return excepDesc;
+    }
+
+    public void setExcepDesc(String excepDesc) {
+        this.excepDesc = excepDesc;
+    }   
 
     @Override
     public int hashCode() {

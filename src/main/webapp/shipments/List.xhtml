@@ -56,7 +56,8 @@
                             <f:facet name="header">
                                 <h:outputText value="&nbsp;"/>
                             </f:facet>
-                            <h:commandButton action="#{shipmentsController.updateToDeliveredStatus(item.id)}" value="Mark as Delivered" rendered="#{item.status == 0}" styleClass="pull-right btn btn-primary"/>                            
+                            <h:commandButton action="#{shipmentsController.updateToDeliveredStatus(item.id)}" value="Mark as Delivered" rendered="#{item.status == 0}" styleClass="pull-right btn btn-primary"/>
+                            <h:commandButton action="#{shipmentsController.sendEmail()}" value="Send Email" styleClass="pull-right btn btn-primary"/>
                         </h:column>
                     </h:dataTable>
                 </h:panelGroup>                

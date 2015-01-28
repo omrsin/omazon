@@ -17,11 +17,11 @@ import javax.jms.Topic;
  *
  * @author floriment
  */
-@Named("positionEventController")
+@Named("exceptionEventController")
 @RequestScoped
-public class PositionEventController {
-    @Resource(mappedName = "jms/position")
-    private Topic position;
+public class ExceptionEventController {
+    @Resource(mappedName = "jms/exception")
+    private Topic exception;
     @Inject
     @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
     private JMSContext context;
@@ -37,15 +37,15 @@ public class PositionEventController {
         this.text = text;
     }
 
-    public PositionEventController() {
+    public ExceptionEventController() {
     }
     
-    public String generatePositionEvent(){
+    public String generateExceptionEvent(){
         sendJMSMessageToDelivery(text);
         return "/generate_events";
     }
 
     private void sendJMSMessageToDelivery(String messageData) {
-        context.createProducer().send(position, messageData);
+        context.createProducer().send(exception, messageData);
     }
 }

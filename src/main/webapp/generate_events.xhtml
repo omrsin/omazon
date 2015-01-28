@@ -12,7 +12,11 @@
         </h:form>
         <h:form>
             <h:inputText value="#{positionEventController.text}"  />
-            <h:commandLink action="#{positionEventController.generateDeliveryEvent()}" value="Simulate Delivery Event"/>
+            <h:commandLink action="#{positionEventController.generatePositionEvent()}" value="Simulate Delivery Event"/>
+        </h:form>
+          <h:form>
+              <h:inputText value="#{exceptionEventController.text}"  />
+              <h:commandLink action="#{exceptionEventController.generateExceptionEvent()}" value="Simulate Delivery Event"/>
         </h:form>
     </h:body>
 </html>

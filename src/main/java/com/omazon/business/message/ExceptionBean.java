@@ -7,8 +7,10 @@ package com.omazon.business.message;
 
 import com.omazon.business.ShipmentsFacade;
 import com.omazon.business.TrucksFacade;
+import com.omazon.business.email.EmailSessionBean;
 import com.omazon.business.message.handlers.DeliveryXmlHandler;
 import com.omazon.business.message.handlers.ExceptionXmlHandler;
+import com.omazon.entities.Orders;
 import com.omazon.entities.Shipments;
 import com.omazon.entities.Trucks;
 import java.io.IOException;
@@ -40,10 +42,11 @@ import org.xml.sax.SAXException;
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
 })
 public class ExceptionBean implements MessageListener {
+
+    @EJB
+    private EmailSessionBean emailSessionBean;
     @EJB
     private TrucksFacade trucksFacade;
-    
-    
 
     public ExceptionBean() {
     }
@@ -80,7 +83,18 @@ public class ExceptionBean implements MessageListener {
         Trucks truck = trucksFacade.find(exceptionHandler.getTruckId());
         truck.setExcepDesc(exceptionHandler.getExceptionMessage());
         trucksFacade.edit(truck);
-       //TODO:: Process the exception by updating the truck
+        //TODO:: Process the exception by updating the truck
+        String to,subject,body;
+        for(Shipments shipment : truck.getShipments()){
+            for(Orders order : shipment.getOrders())
+            {
+                to = order.getCustomer().getEmail();
+                subject = "Please Dear " + order.getCustomer().getName();
+                body = "Hello Dear " + order.getCustomer().getName() + " there is an exception with your order:" + exceptionHandler.getExceptionMessage();
+                emailSessionBean.sendEmail(to, subject, body);
+            }
+        }
+
     }
-    
+
 }

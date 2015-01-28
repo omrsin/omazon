@@ -109,7 +109,12 @@ public class OrdersController implements Serializable {
             JsfUtil.addErrorMessage(e.getMessage());
         }
         return "Create";
-    }    
+    }
+    
+    public String prepareView(int id) {
+        current = (Orders) getFacade().find(id);
+        return "View";
+    }
 
     private void recreateModel() {
         items = null;

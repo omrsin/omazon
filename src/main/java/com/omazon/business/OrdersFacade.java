@@ -8,6 +8,7 @@ package com.omazon.business;
 import com.omazon.entities.Customers;
 import com.omazon.entities.Orders;
 import com.omazon.entities.Shipments;
+import com.omazon.entities.Trucks;
 import java.util.List;
 import java.util.Random;
 import javax.ejb.EJB;
@@ -27,6 +28,9 @@ public class OrdersFacade extends AbstractFacade<Orders> {
     
     @EJB
     private com.omazon.business.ShipmentsFacade shipmentsFacade;
+    
+    @EJB
+    private com.omazon.business.TrucksFacade trucksFacade;
 
     @Override
     protected EntityManager getEntityManager() {
@@ -58,15 +62,30 @@ public class OrdersFacade extends AbstractFacade<Orders> {
         
         if(notDeliveredShipments == 0) {            
             shipment = new Shipments(shipmentsFacade.count()+1, 0);
+            assignTruck(shipment);
         } else {
             shipment = shipmentsFacade.maxByStatus(Shipments.NOT_DELIVERED);
             if(shipment.getOrders().size() >= 3) {
                 shipment = new Shipments(shipmentsFacade.count()+1, 0);
+                assignTruck(shipment);
             }
         }
         
         order.setShipment(shipment);
-        
         getEntityManager().persist(order);
+    }
+
+    private void assignTruck(Shipments shipment) {
+        int availableTrucks = trucksFacade.count();
+        Trucks truck;
+        if(availableTrucks == 0){
+            truck = new Trucks(availableTrucks+1, 0.0, 0.0);           
+        } else {
+            truck = trucksFacade.max();
+            if(truck.getShipments().size() >= 2) {
+                truck = new Trucks(availableTrucks+1, 0.0, 0.0); 
+            }
+        }
+        shipment.setTruck(truck);
     }
 }

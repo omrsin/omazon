@@ -58,6 +58,13 @@
                             </f:facet>
                             <h:outputText value="#{item.shipment.truck.longitude}"/>
                         </h:column>
+                        <h:column>
+                            <f:facet name="header">
+                                <h:outputText value="&nbsp;"/>
+                            </f:facet>
+                            <h:commandLink action="#{ordersController.prepareView(item.id)}" value="View"/>
+                            <h:outputText value=" "/>
+                        </h:column>
                     </h:dataTable>
                 </h:panelGroup>
             </h:form>

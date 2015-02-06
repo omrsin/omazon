@@ -21,14 +21,17 @@ import javax.ejb.Startup;
 @Startup
 public class SynchronizationSingletonBean {
 
-    List<String> clients;
-    List<String> clientsCopy;
-    String currentClient;
+    private List<String> clients;
+    private List<String> clientsCopy;
+    private String currentClient;
+    private boolean systemLocked;
            
     @PostConstruct
     void init () {
         clients = new ArrayList<>();
         clientsCopy = new ArrayList<>();
+        currentClient = "";
+        systemLocked = false;
     }
 
     public SynchronizationSingletonBean() {
@@ -64,5 +67,13 @@ public class SynchronizationSingletonBean {
 
     public void setCurrentClient(String currentClient) {
         this.currentClient = currentClient;
-    }   
+    }
+
+    public boolean isSystemLocked() {
+        return systemLocked;
+    }
+
+    public void setSystemLocked(boolean systemLocked) {
+        this.systemLocked = systemLocked;
+    }    
 }

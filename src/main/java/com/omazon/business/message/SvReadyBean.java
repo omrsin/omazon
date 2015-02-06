@@ -59,6 +59,7 @@ public class SvReadyBean implements MessageListener {
             if(synchEjb.getClientsCopy().isEmpty()){
                 System.out.println("All clients are ready!");
                 synchEjb.createClientsCopy();
+                synchEjb.setSystemLocked(true);
                 context.createProducer().send(clUpdate, "Update!");
                 System.out.println("Online Clients: " + synchEjb.getClients());
             }

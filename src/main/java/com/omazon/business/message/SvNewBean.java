@@ -55,9 +55,13 @@ public class SvNewBean implements MessageListener {
         try {
             String textmessage = ((TextMessage)message).getText();
             if(synchEjb.getClients().isEmpty()) {
+                System.out.println("First client received!");
+                System.out.println("Client id: " + textmessage);
                 synchEjb.addClient(textmessage);
                 context.createProducer().send(clNew, textmessage);
             } else {
+                System.out.println("New client received, starting synchronization phase!");
+                System.out.println("Client id: " + textmessage);
                 synchEjb.createClientsCopy();
                 synchEjb.setCurrentClient(textmessage);
                 context.createProducer().send(clReady, "Get Ready!");

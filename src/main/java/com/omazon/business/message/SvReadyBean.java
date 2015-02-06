@@ -26,19 +26,16 @@ import javax.jms.Topic;
  * @author omar
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/svNew"),
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/svNew"),
+    @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/svReady"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/svReady"),
     @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "Durable"),
-    @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/svNew"),
-    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")    
+    @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/svReady"),
+    @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
 })
-public class SvNewBean implements MessageListener {
+public class SvReadyBean implements MessageListener {
     
     @Resource(mappedName = "jms/clNew")
     private Topic clNew;
-    
-    @Resource(mappedName = "jms/clReady")
-    private Topic clReady;
     
     @Inject
     @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
@@ -47,25 +44,20 @@ public class SvNewBean implements MessageListener {
     @EJB
     private SynchronizationSingletonBean synchEjb;
     
-    public SvNewBean() {
+    public SvReadyBean() {
     }
     
     @Override
     public void onMessage(Message message) {
         try {
             String textmessage = ((TextMessage)message).getText();
-            if(synchEjb.getClients().isEmpty()) {
-                synchEjb.addClient(textmessage);
-                context.createProducer().send(clNew, textmessage);
-            } else {
-                synchEjb.createClientsCopy();
-                synchEjb.setCurrentClient(textmessage);
-                context.createProducer().send(clReady, "Get Ready!");
+            synchEjb.removeFromClientsCopy(textmessage);
+            if(synchEjb.getClientsCopy().isEmpty()){
+                context.createProducer().send(clNew, synchEjb.getCurrentClient());
             }            
-            System.out.println(synchEjb.getClients());
-            
         } catch (JMSException ex) {
             Logger.getLogger(SvNewBean.class.getName()).log(Level.SEVERE, null, ex);
-        }      
-    }    
+        }
+    }
+    
 }

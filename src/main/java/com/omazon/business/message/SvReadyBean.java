@@ -51,10 +51,13 @@ public class SvReadyBean implements MessageListener {
     public void onMessage(Message message) {
         try {
             String textmessage = ((TextMessage)message).getText();
+            System.out.println("Received "+ textmessage);
             synchEjb.removeFromClientsCopy(textmessage);
             if(synchEjb.getClientsCopy().isEmpty()){
+                System.out.println("All clients have been checked");
                 context.createProducer().send(clNew, synchEjb.getCurrentClient());
-            }            
+            }
+            
         } catch (JMSException ex) {
             Logger.getLogger(SvNewBean.class.getName()).log(Level.SEVERE, null, ex);
         }

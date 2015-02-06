@@ -42,7 +42,8 @@ public class SvDoneBean implements MessageListener {
             System.out.println("Client is done: "+ textmessage);
             synchEjb.addClient(synchEjb.getCurrentClient());
             synchEjb.setCurrentClient("");
-            synchEjb.setSystemLocked(false);           
+            synchEjb.setSystemLocked(false);
+            System.out.println("Online Clients: " + synchEjb.getClients());
         } catch (JMSException ex) {
             Logger.getLogger(SvNewBean.class.getName()).log(Level.SEVERE, null, ex);
         }

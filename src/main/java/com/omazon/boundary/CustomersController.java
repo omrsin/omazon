@@ -3,6 +3,7 @@ package com.omazon.boundary;
 import com.omazon.entities.Customers;
 import com.omazon.boundary.util.JsfUtil;
 import com.omazon.business.CustomersFacade;
+import com.omazon.business.SynchronizationSingletonBean;
 
 import java.io.Serializable;
 import java.util.ResourceBundle;
@@ -25,7 +26,10 @@ public class CustomersController implements Serializable {
     private DataModel items = null;
     
     @EJB
-    private com.omazon.business.CustomersFacade ejbFacade;    
+    private com.omazon.business.CustomersFacade ejbFacade;
+    
+    @EJB
+    private SynchronizationSingletonBean synchEjb;
 
     public CustomersController() {
     }
@@ -57,6 +61,10 @@ public class CustomersController implements Serializable {
     }
 
     public String create() {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+            return null;
+        }
         try {
             getFacade().create(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersCreated"));
@@ -73,6 +81,10 @@ public class CustomersController implements Serializable {
     }
 
     public String update(int id) {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+            return null;
+        }
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersUpdated"));
@@ -91,6 +103,9 @@ public class CustomersController implements Serializable {
     }
 
     private void performDestroy() {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+        }
         try {
             getFacade().remove(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("CustomersDeleted"));

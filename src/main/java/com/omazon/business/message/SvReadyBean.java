@@ -55,7 +55,9 @@ public class SvReadyBean implements MessageListener {
             synchEjb.removeFromClientsCopy(textmessage);
             if(synchEjb.getClientsCopy().isEmpty()){
                 System.out.println("All clients have been checked");
+                synchEjb.addClient(synchEjb.getCurrentClient());
                 context.createProducer().send(clNew, synchEjb.getCurrentClient());
+                System.out.println("Online Clients: " + synchEjb.getClients());
             }
             
         } catch (JMSException ex) {

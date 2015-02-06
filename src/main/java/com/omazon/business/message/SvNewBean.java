@@ -59,6 +59,7 @@ public class SvNewBean implements MessageListener {
                 System.out.println("Client id: " + textmessage);
                 synchEjb.addClient(textmessage);
                 context.createProducer().send(clNew, textmessage);
+                System.out.println("Online Clients: " + synchEjb.getClients());
             } else {
                 System.out.println("New client received, starting synchronization phase!");
                 System.out.println("Client id: " + textmessage);
@@ -66,8 +67,6 @@ public class SvNewBean implements MessageListener {
                 synchEjb.setCurrentClient(textmessage);
                 context.createProducer().send(clReady, "Get Ready!");
             }            
-            System.out.println(synchEjb.getClients());
-            
         } catch (JMSException ex) {
             Logger.getLogger(SvNewBean.class.getName()).log(Level.SEVERE, null, ex);
         }      

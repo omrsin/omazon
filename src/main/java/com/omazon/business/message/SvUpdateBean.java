@@ -26,19 +26,16 @@ import javax.jms.Topic;
  * @author omar
  */
 @MessageDriven(activationConfig = {
-    @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/svReady"),
-    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/svReady"),
+    @ActivationConfigProperty(propertyName = "clientId", propertyValue = "jms/svUpdate"),
+    @ActivationConfigProperty(propertyName = "destinationLookup", propertyValue = "jms/svUpdate"),
     @ActivationConfigProperty(propertyName = "subscriptionDurability", propertyValue = "Durable"),
-    @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/svReady"),
+    @ActivationConfigProperty(propertyName = "subscriptionName", propertyValue = "jms/svUpdate"),
     @ActivationConfigProperty(propertyName = "destinationType", propertyValue = "javax.jms.Topic")
 })
-public class SvReadyBean implements MessageListener {
+public class SvUpdateBean implements MessageListener {
     
     @Resource(mappedName = "jms/clNew")
-    private Topic clNew;
-    
-    @Resource(mappedName = "jms/clUpdate")
-    private Topic clUpdate;
+    private Topic clNew;   
     
     @Inject
     @JMSConnectionFactory("java:comp/DefaultJMSConnectionFactory")
@@ -47,19 +44,19 @@ public class SvReadyBean implements MessageListener {
     @EJB
     private SynchronizationSingletonBean synchEjb;
     
-    public SvReadyBean() {
+    public SvUpdateBean() {
     }
     
     @Override
     public void onMessage(Message message) {
         try {
             String textmessage = ((TextMessage)message).getText();
-            System.out.println("Ready: "+ textmessage);
+            System.out.println("Updated: "+ textmessage);
             synchEjb.removeFromClientsCopy(textmessage);
             if(synchEjb.getClientsCopy().isEmpty()){
-                System.out.println("All clients are ready!");
-                synchEjb.createClientsCopy();
-                context.createProducer().send(clUpdate, "Update!");
+                System.out.println("All clients have been updated!");
+                synchEjb.addClient(synchEjb.getCurrentClient());
+                context.createProducer().send(clNew, synchEjb.getCurrentClient());
                 System.out.println("Online Clients: " + synchEjb.getClients());
             }
             

@@ -7,6 +7,7 @@ package com.omazon.boundary;
 
 import com.omazon.boundary.util.JsfUtil;
 import com.omazon.business.ShipmentsFacade;
+import com.omazon.business.SynchronizationSingletonBean;
 import com.omazon.entities.Shipments;
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -40,6 +41,9 @@ public class ShipmentsController implements Serializable {
     
     @EJB
     private com.omazon.business.email.EmailSessionBean ejbEmail;
+    
+    @EJB
+    private SynchronizationSingletonBean synchEjb;
     
     private List<Shipments> availableShipments;
 
@@ -83,6 +87,11 @@ public class ShipmentsController implements Serializable {
     }
 
     public String update() {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+            return null;
+        }
+        
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage("Status updated successfully");

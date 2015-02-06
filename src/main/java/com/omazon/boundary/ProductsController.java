@@ -3,6 +3,7 @@ package com.omazon.boundary;
 import com.omazon.entities.Products;
 import com.omazon.boundary.util.JsfUtil;
 import com.omazon.business.ProductsFacade;
+import com.omazon.business.SynchronizationSingletonBean;
 
 import java.io.Serializable;
 import java.util.ArrayList;
@@ -29,6 +30,9 @@ public class ProductsController implements Serializable {
     
     @EJB
     private com.omazon.business.ProductsFacade ejbFacade;
+    
+    @EJB
+    private SynchronizationSingletonBean synchEjb;
     
     private List<Products> availableProducts;
 
@@ -67,6 +71,11 @@ public class ProductsController implements Serializable {
     }
 
     public String create() {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+            return null;
+        }
+        
         try {
             getFacade().create(current);
             
@@ -89,6 +98,11 @@ public class ProductsController implements Serializable {
     }
 
     public String update(int id) {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+            return null;
+        }
+        
         try {
             getFacade().edit(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProductsUpdated"));
@@ -107,6 +121,9 @@ public class ProductsController implements Serializable {
     }
 
     private void performDestroy() {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");         
+        }
         try {
             getFacade().remove(current);
             JsfUtil.addSuccessMessage(ResourceBundle.getBundle("/Bundle").getString("ProductsDeleted"));

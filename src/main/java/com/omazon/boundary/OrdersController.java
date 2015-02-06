@@ -9,6 +9,7 @@ import com.omazon.boundary.util.JsfUtil;
 import com.omazon.business.CustomersFacade;
 import com.omazon.business.OrdersFacade;
 import com.omazon.business.ProductsFacade;
+import com.omazon.business.SynchronizationSingletonBean;
 import com.omazon.entities.Customers;
 import com.omazon.entities.Orders;
 import com.omazon.entities.Products;
@@ -37,6 +38,8 @@ public class OrdersController implements Serializable {
     private com.omazon.business.CustomersFacade customersFacade;
     @EJB
     private com.omazon.business.ProductsFacade productsFacade;
+    @EJB
+    private SynchronizationSingletonBean synchEjb;
     private Customers customerSelected;
     private DataModel availableProducts;
 
@@ -93,6 +96,11 @@ public class OrdersController implements Serializable {
     }
 
     public String create() {
+        if(synchEjb.isSystemLocked()){
+            JsfUtil.addErrorMessage("The system is currently busy, please try again later.");
+            return null;
+        }
+        
         try {
             List<Products> products = (List<Products>)availableProducts.getWrappedData();
             List<Products> selectedProducts = new ArrayList<Products>();

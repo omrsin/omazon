@@ -60,6 +60,7 @@ public class SvReadyBean implements MessageListener {
                 System.out.println("All clients are ready!");
                 synchEjb.createClientsCopy();
                 synchEjb.setSystemLocked(true);
+                synchEjb.setPhase(SynchronizationSingletonBean.UPDATE_PHASE);
                 context.createProducer().send(clUpdate, "Update!");
                 System.out.println("Online Clients: " + synchEjb.getClients());
             }

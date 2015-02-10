@@ -21,10 +21,14 @@ import javax.ejb.Startup;
 @Startup
 public class SynchronizationSingletonBean {
 
+    public static final String READY_PHASE = "ready_phase";
+    public static final String UPDATE_PHASE = "update_phase";
+    
     private List<String> clients;
     private List<String> clientsCopy;
     private String currentClient;
     private boolean systemLocked;
+    private String phase;
            
     @PostConstruct
     void init () {
@@ -32,6 +36,7 @@ public class SynchronizationSingletonBean {
         clientsCopy = new ArrayList<>();
         currentClient = "";
         systemLocked = false;
+        phase = "";
     }
 
     public SynchronizationSingletonBean() {
@@ -75,5 +80,13 @@ public class SynchronizationSingletonBean {
 
     public void setSystemLocked(boolean systemLocked) {
         this.systemLocked = systemLocked;
-    }    
+    }
+
+    public String getPhase() {
+        return phase;
+    }
+
+    public void setPhase(String phase) {
+        this.phase = phase;
+    }   
 }

@@ -64,6 +64,7 @@ public class SvNewBean implements MessageListener {
                 System.out.println("Client id: " + textmessage);
                 synchEjb.createClientsCopy();
                 synchEjb.setCurrentClient(textmessage);
+                synchEjb.setPhase(SynchronizationSingletonBean.READY_PHASE);
                 context.createProducer().send(clReady, "Get Ready!");
             }            
         } catch (JMSException ex) {

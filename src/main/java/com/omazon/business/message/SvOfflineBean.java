@@ -58,18 +58,25 @@ public class SvOfflineBean implements MessageListener {
             synchEjb.getClients().remove(textmessage);
             synchEjb.getClientsCopy().remove(textmessage);
             System.out.println("Online Clients: " + synchEjb.getClients());
-            if(synchEjb.getPhase().equals(SynchronizationSingletonBean.READY_PHASE) && synchEjb.getClientsCopy().isEmpty()){
-                System.out.println("All clients are ready!");
-                synchEjb.createClientsCopy();
-                synchEjb.setSystemLocked(true);
-                synchEjb.setPhase(SynchronizationSingletonBean.UPDATE_PHASE);
-                context.createProducer().send(clUpdate, "Update!");
-                System.out.println("Online Clients: " + synchEjb.getClients());
-            } else if(synchEjb.getPhase().equals(SynchronizationSingletonBean.UPDATE_PHASE) && synchEjb.getClientsCopy().isEmpty()) {
-                System.out.println("All clients have been updated!");
+            if(!synchEjb.getPhase().equals("") && synchEjb.getClients().isEmpty()){
+                System.out.println("First client received!");
+                System.out.println("Client id: " + synchEjb.getCurrentClient());
                 synchEjb.setPhase("");
                 context.createProducer().send(clNew, synchEjb.getCurrentClient());
-                System.out.println("Online Clients: " + synchEjb.getClients());
+            } else {
+                if(synchEjb.getPhase().equals(SynchronizationSingletonBean.READY_PHASE) && synchEjb.getClientsCopy().isEmpty()){
+                    System.out.println("All clients are ready!");
+                    synchEjb.createClientsCopy();
+                    synchEjb.setSystemLocked(true);
+                    synchEjb.setPhase(SynchronizationSingletonBean.UPDATE_PHASE);
+                    context.createProducer().send(clUpdate, "Update!");
+                    System.out.println("Online Clients: " + synchEjb.getClients());
+                } else if(synchEjb.getPhase().equals(SynchronizationSingletonBean.UPDATE_PHASE) && synchEjb.getClientsCopy().isEmpty()) {
+                    System.out.println("All clients have been updated!");
+                    synchEjb.setPhase("");
+                    context.createProducer().send(clNew, synchEjb.getCurrentClient());
+                    System.out.println("Online Clients: " + synchEjb.getClients());
+                }
             }
         } catch (JMSException ex) {
             Logger.getLogger(SvNewBean.class.getName()).log(Level.SEVERE, null, ex);
